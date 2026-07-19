@@ -50,7 +50,7 @@ async function fetchData(vfile){
     );
     */
 
-    document.getElementById('div_qrcode').innerHTML='<img src="qrcode.png" style="width:246px;" />';
+    document.getElementById('div_qrcode').innerHTML='<img src="qrcode.png" style="width:246px;height:246px;" />';
 
 
 

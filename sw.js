@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jwebapps-v221';
+const CACHE_NAME = 'jwebapps-v12';
 const ASSETS = [
   './',
   './index.html',
