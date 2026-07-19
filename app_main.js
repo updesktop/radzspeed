@@ -50,12 +50,8 @@ async function fetchData(vfile){
     );
     */
 
-    createQRWithLogo(
-      "div_qrcode",
-      CURR_SITE,
-      "logo.png",                         // Your local logo file
-      { width: 246, height: 246 }
-    );
+    document.getElementById('div_qrcode').innerHTML='<img src="qrcode.png" style="width:246px;" />';
+
 
 
     return data;
