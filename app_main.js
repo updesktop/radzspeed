@@ -41,13 +41,21 @@ async function fetchData(vfile){
     document.getElementById("messengerLink").href = linkUrl;
     document.documentElement.style.setProperty('--accent', data.app_color); // changes to red
         
+    /*
     createQRWithLogo(
       "div_qrcode",                  // Container ID
       CURR_SITE,
       "logo.png",// Replace with your logo URL
       { width: 246, height: 246 }     // Optional custom size
     );
-    
+    */
+
+    createQRWithLogo(
+      "div_qrcode",
+      CURR_SITE,
+      "logo.png",                         // Your local logo file
+      { width: 246, height: 246 }
+    );
 
 
     return data;
