@@ -1,0 +1,10 @@
+[
+  {"id":1,"name":"Michelin Primacy 4","size":"195/65 R15","type":"passenger","brand":"Michelin","price":4800,"season":"All-season","inStock":true,"isNew":true},
+  {"id":2,"name":"Bridgestone Dueler A/T","size":"265/70 R16","type":"suv","brand":"Bridgestone","price":7200,"season":"All-terrain","inStock":true,"isNew":false},
+  {"id":3,"name":"Dunlop SP361 Truck","size":"11R22.5","type":"truck","brand":"Dunlop","price":12500,"season":"Heavy-duty","inStock":true,"isNew":false},
+  {"id":4,"name":"Goodyear Assurance","size":"185/55 R14","type":"passenger","brand":"Goodyear","price":3200,"season":"City/All-season","inStock":true,"isNew":false},
+  {"id":5,"name":"Michelin LTX M/S2","size":"235/75 R15","type":"suv","brand":"Michelin","price":8100,"season":"Highway-terrain","inStock":false,"isNew":true},
+  {"id":6,"name":"Bridgestone M729","size":"295/80 R22.5","type":"truck","brand":"Bridgestone","price":14200,"season":"Drive axle","inStock":true,"isNew":false},
+  {"id":7,"name":"Dunlop SP Sport LM705","size":"205/55 R16","type":"passenger","brand":"Dunlop","price":5400,"season":"Performance","inStock":true,"isNew":true},
+  {"id":8,"name":"Goodyear Wrangler MT/R","size":"31x10.50 R15","type":"suv","brand":"Goodyear","price":9500,"season":"Mud-terrain","inStock":true,"isNew":false}
+]

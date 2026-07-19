@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JEFFREY B. ENAD</title>
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Top-quality tires for cars, SUVs, trucks & heavy equipment in Bacolod City. Best prices, fast delivery & fitting services.">
+    <meta name="theme-color" content="#d32f2f">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tire Supply">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1149/1149166.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1149/1149166.png">
+
+    <script type='text/javascript'  src='app_main.js'></script>
+    <script>
+      var CLIENTNAME = '';
+      var PAGE_USERNAME = '';
+      var TELNO='';
+      const data=fetchData('./enadsys.json');
+      
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #d32f2f;
+            --secondary: #212121;
+            --accent: #fbc02d;
+            --light: #f5f5f5;
+            --dark: #1a1a1a;
+            --text: #333;
+            --white: #ffffff;
+            --border: #ddd;
+            --messenger: #0084ff;
+            --call: #28a745;
+            --email: #ff9800;
+        }
+
+        body {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: var(--secondary);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo span { color: var(--white); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 350px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .search-bar button {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .search-bar button:hover { background: #b71c1c; }
+
+        .mobile-menu {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu { display: block; }
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 0;
+                margin-top: 0.5rem;
+                border-top: 1px solid #444;
+            }
+            .nav-links.active { display: flex; }
+            .search-bar {
+                order: 3;
+                width: 100%;
+                max-width: 100%;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            color: var(--white);
+            padding: 8rem 5%;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-inline: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover { filter: brightness(0.9); }
+        .btn-primary { background: var(--primary); }
+        .btn-messenger { background: var(--messenger); }
+        .btn-call { background: var(--call); }
+        .btn-email { background: var(--email); }
+
+        /* Floating Action Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+        .float-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .float-btn:hover { transform: scale(1.1); }
+        .float-messenger { background: var(--messenger); }
+        .float-call { background: var(--call); background:white; }
+        .float-email { background: var(--email); }
+
+        @media (max-width: 768px) {
+            .floating-buttons { bottom: 20px; right: 20px; }
+            .float-btn { width: 48px; height: 48px; font-size: 20px; }
+            .hero h1 { font-size: 2rem; }
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .category-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .category-card:hover { transform: translateY(-8px); }
+
+        /* Products Layout */
+        .products-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .filter-sidebar {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .clear-filters {
+            color: var(--primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .filter-group { margin-bottom: 1.5rem; }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            cursor: pointer;
+        }
+        .sort-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #757575;
+        }
+        .product-info { padding: 1.5rem; }
+        .product-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 3px; background: var(--light); }
+        .tag.new { background: #e8f5e9; color: #2e7d32; }
+        .tag.stock { background: #fff3e0; color: #e65100; }
+        .product-price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+        .inquire-btn {
+            width: 100%;
+            padding: 0.7rem;
+            background: var(--messenger);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .inquire-btn:hover { background: #0078e7; }
+        .no-results { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: #666; }
+
+        /* Others */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .services-list { list-style: none; margin-top: 1rem; }
+        .services-list li { padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+        .services-list li::before { content: "✓"; color: var(--primary); font-weight: bold; margin-right: 0.5rem; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        .map-container {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            height: 350px;
+        }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+        footer { background: var(--dark); color: var(--white); padding: 3rem 5% 1rem; }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-col h4 { color: var(--accent); margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.5rem; }
+        .footer-col ul li a { color: #bbb; text-decoration: none; }
+        .footer-col ul li a:hover { color: var(--accent); }
+        .copyright { padding-top: 1rem; border-top: 1px solid #444; color: #777; font-size: 0.9rem; }
+
+        @media (max-width: 992px) {
+            .products-layout, .two-col, .contact-container { grid-template-columns: 1fr; }
+            .filter-sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Contact Buttons -->
+<div class="floating-buttons">
+    <a id="messengerLink" target="_blank" rel="noopener noreferrer" class="float-btn float-messenger" title="Chat with us on Messenger"><img src="app_gfx/msgr.png" style="height:100%;"/></a>
+    <a href="javascript:callText('call')" class="float-btn float-call" title="Call Us"><img src="app_gfx/telephone.png" style="height:100%;"/></a>
+    <a href="javascript:callText('text')" class="float-btn float-email" title="Send SMS"><img src="app_gfx/sms.png" style="height:100%;"/></a>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="nav-container">
+        <div class="logo" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+          <span id="div_clientname"></span></span>
+          <span>Tire Trading</span>
+        </div>
+        <ul class="nav-links" id="mobile-nav">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact & Map</a></li>
+        </ul>
+        <div class="search-bar">
+            <input type="text" id="main-search" placeholder="Search tire size, brand...">
+            <button onclick="applyFilters()">Search</button>
+        </div>
+        <div class="mobile-menu" id="menu-toggle">☰</div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <h1>Premium Tires for Every Vehicle</h1>
+    <p>Top-quality tires for cars, SUVs, trucks, and heavy equipment. Best prices in Bacolod & Negros Occidental — fast delivery available!</p>
+    <a href="#products" class="btn">View All Tires</a>
+    <a href="https://m.me/radzspeed.bacolod?text=Hello%20Negros%20Tire%20Supply!%20I%20need%20tires%20for%20my%20vehicle." target="_blank" class="btn btn-messenger">💬 Chat on Messenger</a>
+</section>
+
+<!-- Categories -->
+<section id="categories">
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="categories-grid">
+        <div class="category-card" onclick="setCategory('passenger')">
+            <h3>Passenger Cars</h3>
+            <p>All-season, performance & eco tires</p>
+        </div>
+        <div class="category-card" onclick="setCategory('suv')">
+            <h3>SUV & Pickup</h3>
+            <p>All-terrain, mud-terrain & highway tires</p>
+        </div>
+        <div class="category-card" onclick="setCategory('truck')">
+            <h3>Trucks & Buses</h3>
+            <p>Heavy-duty, long-lasting commercial tires</p>
+        </div>
+        <div class="category-card" onclick="setCategory('industrial')">
+            <h3>Industrial & Farm</h3>
+            <p>Construction, agricultural & OTR tires</p>
+        </div>
+    </div>
+</section>
+
+<!-- Products -->
+<section id="products" style="background: var(--light);">
+    <h2 class="section-title">Our Tire Catalog</h2>
+    <div class="products-layout">
+        <aside class="filter-sidebar">
+            <div class="filter-header">
+                <h3>Filter Tires</h3>
+                <button class="clear-filters" onclick="clearAllFilters()">Clear All</button>
+            </div>
+            <div class="filter-group">
+                <h4>Vehicle Type</h4>
+                <label class="filter-option"><input type="checkbox" value="passenger" class="filter-type"> Passenger Car</label>
+                <label class="filter-option"><input type="checkbox" value="suv" class="filter-type"> SUV / Pickup</label>
+                <label class="filter-option"><input type="checkbox" value="truck" class="filter-type"> Truck / Bus</label>
+                <label class="filter-option"><input type="checkbox" value="industrial" class="filter-type"> Industrial / Farm</label>
+            </div>
+            <div class="filter-group">
+                <h4>Brand</h4>
+                <label class="filter-option"><input type="checkbox" value="Michelin" class="filter-brand"> Michelin</label>
+                <label class="filter-option"><input type="checkbox" value="Bridgestone" class="filter-brand"> Bridgestone</label>
+                <label class="filter-option"><input type="checkbox" value="Dunlop" class="filter-brand"> Dunlop</label>
+                <label class="filter-option"><input type="checkbox" value="Goodyear" class="filter-brand"> Goodyear</label>
+            </div>
+            <div class="filter-group">
+                <h4>Price Range (₱)</h4>
+                <label class="filter-option"><input type="checkbox" value="0-5000" class="filter-price"> Under ₱5,000</label>
+                <label class="filter-option"><input type="checkbox" value="5000-10000" class="filter-price"> ₱5,000 – ₱10,000</label>
+                <label class="filter-option"><input type="checkbox" value="10000+" class="filter-price"> Above ₱10,000</label>
+            </div>
+            <div class="filter-group">
+                <h4>Sort By</h4>
+                <select class="sort-select" id="sort-option" onchange="applyFilters()">
+                    <option value="default">Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name">Name A–Z</option>
+                </select>
+            </div>
+        </aside>
+        <div class="products-main">
+            <div class="products-top-bar"><div id="results-count">Showing 8 tires</div></div>
+            <div class="products-grid" id="products-grid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about">
+    <div class="two-col">
+        <div>
+            <h2 class="section-title" style="text-align: left;">About Our Business</h2>
+            <p><span id="about_clientname">Negros Tire Supply</span> has been serving Bacolod City and Negros Occidental since 2010. We supply original and trusted tire brands at competitive wholesale and retail prices.</p>
+            <p>We stock all major brands and offer tire fitting, balancing, and delivery services across Western Visayas.</p>
+        </div>
+        <div>
+            <h3>Our Services</h3>
+            <ul class="services-list">
+                <li>Retail & wholesale tire supply</li>
+                <li>Professional tire fitting & balancing</li>
+                <li>Nationwide delivery available</li>
+                <li>Warranty on all new tires</li>
+                <li>Free tire safety check</li>
+                <li>Special bulk discounts for fleets</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Contact & Map -->
+<section id="contact" style="background: var(--light);">
+    <h2 class="section-title">Contact Us & Location</h2>
+    <div class="contact-container">
+        <div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="text" placeholder="Company / Vehicle Type">
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="email" placeholder="Email Address">
+                <textarea rows="5" placeholder="Tire size needed / Message" required></textarea>
+                <button type="submit">Send Inquiry</button>
+            </form>
+            <div style="margin-top:1.5rem;text-align:center;">
+                <a href="https://m.me/radzspeed.bacolod?text=Hello%20Negros%20Tire%20Supply!%20I%20have%20a%20question%20about%20your%20services." target="_blank" class="btn btn-messenger">💬 Chat with us on Messenger</a>
+            </div>
+        </div>
+        <div class="contact-details">
+            <h3>Business Details</h3>
+            <!--p>📍 123 Lacson Street, Bacolod City, Negros Occidental</p>
+            <p>📞 034 123 4567 | 📱 0917 123 4567</p>
+            <p>✉️ info@negrostiresupply.ph</p>
+            <p>🕒 Open: Mon–Sat 8:00AM – 6:00PM</p>
+            <p>🚚 Delivery to all Negros Occidental cities</p-->
+
+            <p id="biz_address">📍 123 Lacson Street, Bacolod City, Negros Occidental</p>
+            <p id="biz_tel">📞 034 123 4567 | 📱 0917 123 4567</p>
+            <p id="biz_email">✉️ info@negrostiresupply.ph</p>
+            <p>🕒 Open: Mon–Sat 8:00AM – 6:00PM</p>
+            <p>🚚 Delivery to all Negros Occidental cities</p>
+            <div class="map-container">
+                <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.5678901234567!2d123.0319999!3d10.6704999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9970f1e8e7b1d%3A0x7c5a3e6f9d8b7c6d!2sLacson%20St%2C%20Bacolod%20City!5e0!3m2!1sen!2sph!4v1721048400000" allowfullscreen loading="lazy"></iframe>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-col"><h4 id="footer_clientname">Negros Tire Supply</h4><p>Your trusted local tire supplier in Bacolod City.</p></div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Location & Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Brands</h4>
+            <ul>
+                <li><a href="#">Michelin</a></li>
+                <li><a href="#">Bridgestone</a></li>
+                <li><a href="#">Dunlop</a></li>
+                <li><a href="#">Goodyear</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">© 2026 UPDESKTOP Digital. All rights reserved.</div>
+</footer>
+
+
+<script>
+// PWA SW
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('PWA Service Worker Registered'))
+            .catch(err => console.log('SW Error:', err));
+    });
+}
+
+// Mobile Menu
+document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('mobile-nav').classList.toggle('active'));
+document.querySelectorAll('#mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => { if(window.innerWidth <=768) document.getElementById('mobile-nav').classList.remove('active'); });
+});
+
+const xtireProducts = [
+    {id:1,name:"Michelin Primacy 4",size:"195/65 R15",type:"passenger",brand:"Michelin",price:4800,season:"All-season",inStock:true,isNew:true},
+    {id:2,name:"Bridgestone Dueler A/T",size:"265/70 R16",type:"suv",brand:"Bridgestone",price:7200,season:"All-terrain",inStock:true,isNew:false},
+    {id:3,name:"Dunlop SP361 Truck",size:"11R22.5",type:"truck",brand:"Dunlop",price:12500,season:"Heavy-duty",inStock:true,isNew:false},
+    {id:4,name:"Goodyear Assurance",size:"185/55 R14",type:"passenger",brand:"Goodyear",price:3200,season:"City/All-season",inStock:true,isNew:false},
+    {id:5,name:"Michelin LTX M/S2",size:"235/75 R15",type:"suv",brand:"Michelin",price:8100,season:"Highway-terrain",inStock:false,isNew:true},
+    {id:6,name:"Bridgestone M729",size:"295/80 R22.5",type:"truck",brand:"Bridgestone",price:14200,season:"Drive axle",inStock:true,isNew:false},
+    {id:7,name:"Dunlop SP Sport LM705",size:"205/55 R16",type:"passenger",brand:"Dunlop",price:5400,season:"Performance",inStock:true,isNew:true},
+    {id:8,name:"Goodyear Wrangler MT/R",size:"31x10.50 R15",type:"suv",brand:"Goodyear",price:9500,season:"Mud-terrain",inStock:true,isNew:false}
+];
+
+
+let tireProducts = [];
+
+fetch('./db/stock.json')
+  .then(response => response.json())
+  .then(data => {
+    tireProducts = data;
+    renderProducts(tireProducts); // Show products once loaded
+  })
+  .catch(error => console.error('Error loading JSON:', error));
+
+function renderProducts(products) {    
+    const grid = document.getElementById('products-grid');
+    const count = document.getElementById('results-count');
+    if (!products.length) {
+        grid.innerHTML = `<div class="no-results">No tires match your filters.</div>`;
+        count.textContent = "Showing 0 tires";
+        return;
+    }
+    count.textContent = `Showing ${products.length} tire${products.length!==1?'s':''}`;
+    grid.innerHTML = products.map(t => `
+        <div class="product-card">
+            <div class="product-img">${t.size}</div>
+            <div class="product-info">
+                <div class="product-tags">
+                    ${t.isNew?'<span class="tag new">New Arrival</span>':''}
+                    ${t.inStock?'<span class="tag stock">In Stock</span>':'<span class="tag">Out of Stock</span>'}
+                </div>
+                <h3 class="product-name">${t.name}</h3>
+                <p class="product-specs">Size: ${t.size}<br>Type: ${t.season}</p>
+                <p class="product-price">₱${t.price.toLocaleString()} each</p>
+                <button class="inquire-btn" onclick="inquireTire('${t.name}','${t.size}')">💬 Inquire on Messenger</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function inquireTire(name, size) {
+    const msg = encodeURIComponent(
+        `Hello ${CLIENTNAME}! I want to inquire about:
+        - Tire: ${name}
+        - Size: ${size}
+
+        Please send price & availability. Thank you!`
+    );
+    window.open(`https://m.me/${PAGE_USERNAME}?text=${msg}`, '_blank');
+}
+
+function applyFilters() {
+    const q = document.getElementById('main-search').value.toLowerCase().trim();
+    const types = Array.from(document.querySelectorAll('.filter-type:checked')).map(c=>c.value);
+    const brands = Array.from(document.querySelectorAll('.filter-brand:checked')).map(c=>c.value);
+    const prices = Array.from(document.querySelectorAll('.filter-price:checked')).map(c=>c.value);
+    const sort = document.getElementById('sort-option').value;
+
+    //window.location.hash = '#product';
+
+    let filtered = tireProducts.filter(t => {
+        // Fixed: Added safe check for null/undefined values in search
+        const matchQ = !q || [t.name, t.size, t.brand].some(x => 
+            x && x.toLowerCase().includes(q)
+        );
+        
+        const matchType = !types.length || types.includes(t.type);
+        const matchBrand = !brands.length || brands.includes(t.brand);
+        
+        let matchPrice = true;
+        if (prices.length) {
+            matchPrice = prices.some(r => {
+                // Fixed: Use consistent range logic (0-5000 includes 0)
+                if (r === '0-5000') return t.price >= 0 && t.price < 5000;
+                if (r === '5000-10000') return t.price >= 5000 && t.price <= 10000;
+                if (r === '10000+') return t.price >= 10000; // Fixed: include exactly 10000
+                return false;
+            });
+        }
+
+        // Smooth scroll to the section with id="products"
+        const targetSection = document.getElementById('results-count');
+        if (targetSection) {
+            targetSection.scrollIntoView({
+            behavior: 'smooth', // smooth animation
+            block: 'start'      // align to top
+            });
+        }
+
+        return matchQ && matchType && matchBrand && matchPrice;
+    });
+
+    // Fixed: Use else-if to prevent multiple sorts
+    if (sort === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sort === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (sort === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    
+    renderProducts(filtered);
+}
+
+function clearAllFilters() {
+    document.getElementById('main-search').value='';
+    document.querySelectorAll('.filter-type,.filter-brand,.filter-price').forEach(c=>c.checked=false);
+    document.getElementById('sort-option').value='default';
+    applyFilters();
+}
+
+function setCategory(type) {
+    clearAllFilters();
+    document.querySelector(`.filter-type[value="${type}"]`).checked=true;
+    applyFilters();
+    document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href');
+        if(id==='#') return;
+        const el = document.querySelector(id);
+        if(el) el.scrollIntoView({behavior:'smooth'});
+    });
+});
+
+// Form
+document.querySelector('.contact-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    alert('Thank you! We will reply within 24 hours.');
+    e.target.reset();
+});
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{
+    renderProducts(tireProducts);
+    document.querySelectorAll('.filter-type,.filter-brand,.filter-price').forEach(c=>c.addEventListener('change',applyFilters));
+    document.getElementById('main-search').addEventListener('keydown',e=>{if(e.key==='Enter') applyFilters();});
+});
+</script>
+</body>
+</html>
