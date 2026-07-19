@@ -1,4 +1,8 @@
 console.log('Jeffrey in the House...');
+function start_app(){
+  const data=fetchData('./enadsys.json');
+}
+
 async function fetchData(vfile){
   try {
     const response = await fetch(vfile);
@@ -8,11 +12,15 @@ async function fetchData(vfile){
     }
     
     const data = await response.json();
-    CLIENTNAME=data.clientname;
-    TELNO=data.telno;
-    document.title=CLIENTNAME;
-    div_clientname.textContent=CLIENTNAME;
-    about_clientname.textContent=CLIENTNAME;
+    CURR_CLIENTNAME=data.clientname;
+    CURR_SITE=data.site;
+    CURR_TELNO=data.telno;
+    CURR_COLOR=data.app_color;
+    CURR_BGCOLOR=data.app_background;
+    document.title=CURR_CLIENTNAME;
+    div_clientname.textContent=CURR_CLIENTNAME;
+    div_clientname.style.color=CURR_COLOR;
+    about_clientname.textContent=CURR_CLIENTNAME;
     footer_clientname.textContent=data.full_clientname;
     biz_address.textContent=data.address;
     biz_tel.textContent=data.telephones;
@@ -24,14 +32,24 @@ async function fetchData(vfile){
     const plusCode = "JXR6+M4W";
     const zoomLevel = 16;
     
-    updateMap(latitude, longitude,'JXR6+M4W, Alijis, Bacolod, 6100 Negros Occidental, Philippines');
+    updateMap(latitude, longitude);
 
-    PAGE_USERNAME=data.messenger;
+    CURR_MESSENGER=data.messenger;
     // Build the link URL
-    const linkUrl = `https://m.me/${PAGE_USERNAME}`;
+    const linkUrl = `https://m.me/${CURR_MESSENGER}`;
     // Assign to href
     document.getElementById("messengerLink").href = linkUrl;
     document.documentElement.style.setProperty('--accent', data.app_color); // changes to red
+        
+    createQRWithLogo(
+      "div_qrcode",                  // Container ID
+      CURR_SITE,
+      "logo.png",// Replace with your logo URL
+      { width: 246, height: 246 }     // Optional custom size
+    );
+    
+
+
     return data;
   } catch (error) {
     console.error('Error fetching JSON:', error);
@@ -64,7 +82,7 @@ async function get_stock(vfile) {
 
 function callText(m){
   //alert(m);
-  callTextGO(m,TELNO);
+  callTextGO(m,CURR_TELNO);
 }
 
 function callTextGO(m,celno){  

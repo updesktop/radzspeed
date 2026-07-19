@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crud-pwa-local-v2';
+const CACHE_NAME = 'jwebapps-v2';
 const ASSETS = [
   './',
   './index.html',

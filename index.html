@@ -11,16 +11,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Tire Supply">
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1149/1149166.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1149/1149166.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
 
-    <script type='text/javascript'  src='app_main.js'></script>
+    
     <script>
-      var CLIENTNAME = '';
-      var PAGE_USERNAME = '';
-      var TELNO='';
-      const data=fetchData('./enadsys.json');
+      var CURR_CLIENTNAME = '';
+      var CURR_SITE = '';
+      var CURR_MESSENGER = '';
+      var CURR_TELNO='';
+      var CURR_COLOR=''; var CURR_BGCOLOR='';
+      //var data=[];
+      //const data=fetchData('./enadsys.json');
       
     </script>
 
@@ -155,7 +172,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('mainpic.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
             color: var(--white);
             padding: 8rem 5%;
             text-align: center;
@@ -183,6 +200,7 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            background:red;
         }
 
         .btn:hover { filter: brightness(0.9); }
@@ -415,7 +433,28 @@
         .footer-col ul li { margin-bottom: 0.5rem; }
         .footer-col ul li a { color: #bbb; text-decoration: none; }
         .footer-col ul li a:hover { color: var(--accent); }
-        .copyright { padding-top: 1rem; border-top: 1px solid #444; color: #777; font-size: 0.9rem; }
+        .copyright { padding-top: 1rem; border-top: 1px solid #444; color: #777; font-size: 0.9rem; text-align: center;}
+
+        /* Outer container */
+        .outer {
+          /* Enable Flexbox */
+          display: flex;
+          justify-content: center;   /* Horizontal center */
+          align-items: center;       /* Vertical center */
+
+          /* Define size so vertical centering works */
+          width: 100%;
+          height: 350px;
+          border: 2px solid #333;
+          background: #f5f5f5;
+        }
+
+        /* Inner div to be centered */
+        .inner {
+          padding: 20px;
+          background: white;
+          border: 1px solid #999;
+        }
 
         @media (max-width: 992px) {
             .products-layout, .two-col, .contact-container { grid-template-columns: 1fr; }
@@ -435,8 +474,8 @@
 <!-- Header -->
 <header>
     <div class="nav-container">
-        <div class="logo" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
-          <span id="div_clientname"></span></span>
+        <div class="logo" style="color:white;" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+          <span id="div_clientname" style="color:red;"></span></span>
           <span>Tire Trading</span>
         </div>
         <ul class="nav-links" id="mobile-nav">
@@ -449,7 +488,7 @@
             <input type="text" id="main-search" placeholder="Search tire size, brand...">
             <button onclick="applyFilters()">Search</button>
         </div>
-        <div class="mobile-menu" id="menu-toggle">☰</div>
+        <div class="mobile-menu" id="menu-toggle" style="color:white;">☰</div>
     </div>
 </header>
 
@@ -499,6 +538,7 @@
                 <label class="filter-option"><input type="checkbox" value="suv" class="filter-type"> SUV / Pickup</label>
                 <label class="filter-option"><input type="checkbox" value="truck" class="filter-type"> Truck / Bus</label>
                 <label class="filter-option"><input type="checkbox" value="industrial" class="filter-type"> Industrial / Farm</label>
+                <label class="filter-option"><input type="checkbox" value="rims" class="filter-type"> Rims / Magwheels</label>
             </div>
             <div class="filter-group">
                 <h4>Brand</h4>
@@ -506,6 +546,7 @@
                 <label class="filter-option"><input type="checkbox" value="Bridgestone" class="filter-brand"> Bridgestone</label>
                 <label class="filter-option"><input type="checkbox" value="Dunlop" class="filter-brand"> Dunlop</label>
                 <label class="filter-option"><input type="checkbox" value="Goodyear" class="filter-brand"> Goodyear</label>
+                <label class="filter-option"><input type="checkbox" value="Panther" class="filter-brand"> Panther</label>
             </div>
             <div class="filter-group">
                 <h4>Price Range (₱)</h4>
@@ -554,21 +595,9 @@
 
 <!-- Contact & Map -->
 <section id="contact" style="background: var(--light);">
-    <h2 class="section-title">Contact Us & Location</h2>
+    <h2 class="section-title">Contact Us</h2>
     <div class="contact-container">
-        <div>
-            <form class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="text" placeholder="Company / Vehicle Type">
-                <input type="tel" placeholder="Phone Number" required>
-                <input type="email" placeholder="Email Address">
-                <textarea rows="5" placeholder="Tire size needed / Message" required></textarea>
-                <button type="submit">Send Inquiry</button>
-            </form>
-            <div style="margin-top:1.5rem;text-align:center;">
-                <a href="https://m.me/radzspeed.bacolod?text=Hello%20Negros%20Tire%20Supply!%20I%20have%20a%20question%20about%20your%20services." target="_blank" class="btn btn-messenger">💬 Chat with us on Messenger</a>
-            </div>
-        </div>
+
         <div class="contact-details">
             <h3>Business Details</h3>
             <!--p>📍 123 Lacson Street, Bacolod City, Negros Occidental</p>
@@ -584,9 +613,17 @@
             <p>🚚 Delivery to all Negros Occidental cities</p>
             <div class="map-container">
                 <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.5678901234567!2d123.0319999!3d10.6704999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9970f1e8e7b1d%3A0x7c5a3e6f9d8b7c6d!2sLacson%20St%2C%20Bacolod%20City!5e0!3m2!1sen!2sph!4v1721048400000" allowfullscreen loading="lazy"></iframe>
-            </div>
-            
+            </div>            
         </div>
+
+        <div class="contact-details" style="height:auto;border:1px solid lightgray;padding:10px;">
+            <h3 style="text-align: center;">Scan & Share</h3>
+            <div class="outer">
+              <div id="div_qrcode" class="inner"></div>
+            </div>
+            <button type="submit" onclick="share_app()" class="inquire-btn" style="width:100%;height:50px;margin-top:3%;">Share</button>
+        </div>
+
     </div>
 </section>
 
@@ -612,11 +649,16 @@
             </ul>
         </div>
     </div>
-    <div class="copyright">© 2026 UPDESKTOP Digital. All rights reserved.</div>
+    <div class="copyright">© 2026 <a href="https://facebook.com/updesktop">UPDESKTOP Digital</a>. All rights reserved.</div>
+   
 </footer>
 
-
+<script type='text/javascript' src='qrcode.min.js'></script>
+<script type='text/javascript'  src='app_main.js'></script>
+<script type='text/javascript'  src='jbelib.js'></script>
 <script>
+  //const url = document.getElementById('urlInput').value.trim();
+  //  const logo = document.getElementById('logoInput').value.trim();
 // PWA SW
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -626,22 +668,15 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+//const data=fetchData('./enadsys.json');
+start_app();
+
 // Mobile Menu
 document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('mobile-nav').classList.toggle('active'));
 document.querySelectorAll('#mobile-nav a').forEach(link => {
     link.addEventListener('click', () => { if(window.innerWidth <=768) document.getElementById('mobile-nav').classList.remove('active'); });
 });
 
-const xtireProducts = [
-    {id:1,name:"Michelin Primacy 4",size:"195/65 R15",type:"passenger",brand:"Michelin",price:4800,season:"All-season",inStock:true,isNew:true},
-    {id:2,name:"Bridgestone Dueler A/T",size:"265/70 R16",type:"suv",brand:"Bridgestone",price:7200,season:"All-terrain",inStock:true,isNew:false},
-    {id:3,name:"Dunlop SP361 Truck",size:"11R22.5",type:"truck",brand:"Dunlop",price:12500,season:"Heavy-duty",inStock:true,isNew:false},
-    {id:4,name:"Goodyear Assurance",size:"185/55 R14",type:"passenger",brand:"Goodyear",price:3200,season:"City/All-season",inStock:true,isNew:false},
-    {id:5,name:"Michelin LTX M/S2",size:"235/75 R15",type:"suv",brand:"Michelin",price:8100,season:"Highway-terrain",inStock:false,isNew:true},
-    {id:6,name:"Bridgestone M729",size:"295/80 R22.5",type:"truck",brand:"Bridgestone",price:14200,season:"Drive axle",inStock:true,isNew:false},
-    {id:7,name:"Dunlop SP Sport LM705",size:"205/55 R16",type:"passenger",brand:"Dunlop",price:5400,season:"Performance",inStock:true,isNew:true},
-    {id:8,name:"Goodyear Wrangler MT/R",size:"31x10.50 R15",type:"suv",brand:"Goodyear",price:9500,season:"Mud-terrain",inStock:true,isNew:false}
-];
 
 
 let tireProducts = [];
@@ -682,13 +717,13 @@ function renderProducts(products) {
 
 function inquireTire(name, size) {
     const msg = encodeURIComponent(
-        `Hello ${CLIENTNAME}! I want to inquire about:
+        `Hello ${CURR_CLIENTNAME}! I want to inquire about:
         - Tire: ${name}
         - Size: ${size}
 
         Please send price & availability. Thank you!`
     );
-    window.open(`https://m.me/${PAGE_USERNAME}?text=${msg}`, '_blank');
+    window.open(`https://m.me/${CURR_MESSENGER}?text=${msg}`, '_blank');
 }
 
 function applyFilters() {
@@ -770,11 +805,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 
 // Form
+/*
 document.querySelector('.contact-form').addEventListener('submit',e=>{
     e.preventDefault();
     alert('Thank you! We will reply within 24 hours.');
     e.target.reset();
 });
+*/
 
 // Init
 document.addEventListener('DOMContentLoaded',()=>{
