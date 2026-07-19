@@ -5,6 +5,128 @@ function createQRWithLogo(containerId, url, logoPath, options = {}) {
       height: 246,
       colorDark: "#000000",
       colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H,
+      logoRatio: 0.22,
+      logoMargin: 6
+    };
+
+    const config = Object.assign({}, defaults, options);
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    // --------------------------
+    // Step 1: Load logo first, convert to Base64
+    // --------------------------
+    const logo = new Image();
+    logo.crossOrigin = "anonymous";
+    logo.onload = function () {
+      // Convert to Base64
+      const tempCanvasLogo = document.createElement("canvas");
+      const ctxLogo = tempCanvasLogo.getContext("2d");
+      tempCanvasLogo.width = logo.naturalWidth;
+      tempCanvasLogo.height = logo.naturalHeight;
+      ctxLogo.drawImage(logo, 0, 0);
+      const logoBase64 = tempCanvasLogo.toDataURL("image/png");
+
+      // --------------------------
+      // Step 2: Generate QR Code
+      // --------------------------
+      const tempDiv = document.createElement("div");
+      new QRCode(tempDiv, {
+        text: url,
+        width: config.width,
+        height: config.height,
+        colorDark: config.colorDark,
+        colorLight: config.colorLight,
+        correctLevel: config.correctLevel
+      });
+
+      // Wait for QR to be ready
+      setTimeout(() => {
+        const qrEl = tempDiv.querySelector("img") || tempDiv.querySelector("canvas");
+        if (!qrEl) {
+          console.error("QR element not created");
+          reject("QR generation failed");
+          return;
+        }
+
+        // --------------------------
+        // Step 3: Merge into one canvas
+        // --------------------------
+        const finalCanvas = document.createElement("canvas");
+        const ctx = finalCanvas.getContext("2d");
+        finalCanvas.width = config.width;
+        finalCanvas.height = config.height;
+
+        const qrImg = new Image();
+        qrImg.onload = () => {
+          ctx.drawImage(qrImg, 0, 0, config.width, config.height);
+
+          const logoSize = config.width * config.logoRatio;
+          const x = (config.width - logoSize) / 2;
+          const y = (config.height - logoSize) / 2;
+
+          // White background behind logo
+          ctx.fillStyle = config.colorLight;
+          ctx.fillRect(
+            x - config.logoMargin,
+            y - config.logoMargin,
+            logoSize + config.logoMargin * 2,
+            logoSize + config.logoMargin * 2
+          );
+
+          // Draw logo
+          const logoFinal = new Image();
+          logoFinal.onload = () => {
+            ctx.drawImage(logoFinal, x, y, logoSize, logoSize);
+            const finalImg = document.createElement("img");
+            finalImg.src = finalCanvas.toDataURL("image/png");
+            finalImg.style.width = config.width + "px";
+            finalImg.style.height = config.height + "px";
+            container.appendChild(finalImg);
+            console.log("✅ Done: QR + Logo loaded");
+            resolve(finalImg.src);
+          };
+          logoFinal.src = logoBase64;
+        };
+
+        qrImg.onerror = () => {
+          console.error("QR image load failed");
+          reject("QR image error");
+        };
+
+        // Get QR image source correctly
+        qrImg.src = qrEl.tagName === "IMG" ? qrEl.src : qrEl.toDataURL("image/png");
+
+      }, 200); // Longer delay for mobile rendering
+    };
+
+    logo.onerror = function () {
+      // Fallback: show QR only if logo fails
+      console.warn("⚠️ Logo not found — showing QR only");
+      new QRCode(container, {
+        text: url,
+        width: config.width,
+        height: config.height,
+        colorDark: config.colorDark,
+        colorLight: config.colorLight,
+        correctLevel: config.correctLevel
+      });
+      resolve();
+    };
+
+    // Load your logo file
+    logo.src = logoPath;
+  });
+}
+
+function xxzzxcreateQRWithLogo(containerId, url, logoPath, options = {}) {
+  return new Promise((resolve, reject) => {
+    const defaults = {
+      width: 246,
+      height: 246,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.H, // High correction = safe for logo
       logoRatio: 0.22,    // Logo size % of QR
       logoMargin: 6       // White padding around logo
